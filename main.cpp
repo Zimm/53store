@@ -42,7 +42,10 @@ int main(int argc, char **argv) {
 
 	F53File reader((char *)"test.53store");
 
+	cout << "sdalkfj" << endl;
+
 	uint6_t *adigits = reader.getData(&length);
+
 
 	for (int i = 0; i < length; i++) {
 

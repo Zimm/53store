@@ -83,7 +83,7 @@ uint6_t *F53File::getData(int *length) {
 	
 	uint8_t leftOver = (uint8_t)data[fileStat.st_size-1];
 
-	int over = (fileStat.st_size - 1) % 3;
+	int over = (int)leftOver;
 
 	uint6_t *result = (uint6_t *)calloc(4*((fileStat.st_size - over -1)/3), sizeof(uint6_t));
 
