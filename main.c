@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string.h>
 #include "F53Encoder.h"
+#include "F53Decoder.h"
 
 using namespace std;
 
@@ -23,6 +24,12 @@ int main(int argc, char **argv) {
 		cout << digits[i].b1 << digits[i].b2 << digits[i].b3 << digits[i].b4 << digits[i].b5 << digits[i].b6 << endl;
 
 	}
+
+	F53Decoder decoder;
+
+	char *result = decoder.decodeStatement(digits, length);
+
+	cout << "decoded: " << result << endl;
 
 	return 0;
 }
