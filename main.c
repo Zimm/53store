@@ -14,9 +14,11 @@ int main(int argc, char **argv) {
 
 	F53Encoder encoder;
 
-	uint6_t *digits = encoder.encodeStatement(word);
+	int length = 0;
 
-	for (int i = 0; i < strlen(word); i++) {
+	uint6_t *digits = encoder.encodeStatement(word, &length);
+
+	for (int i = 0; i < length; i++) {
 
 		cout << digits[i].b1 << digits[i].b2 << digits[i].b3 << digits[i].b4 << digits[i].b5 << digits[i].b6 << endl;
 

@@ -18,12 +18,14 @@ extern const unsigned int encoderTableLength;
 extern const int magicCondesner;
 
 static uint6_t condense(int i);
+static int makeDense(uint6_t i);
 
 class F53Encoder {
                 //Have to change readme;
         public:
                 uint6_t encodeChar(char c);
-                uint6_t *encodeStatement(char *c);
+		uint6_t *encodeSpecial(char c); //return 2 length array
+                uint6_t *encodeStatement(char *c, int *length);
 };
 
 
