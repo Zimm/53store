@@ -1,6 +1,6 @@
 all:lib53Store
 
-test:lib53Store
+test:
 	@echo 'Building test program....'
 	@g++ main.c -o build/test build/lib53Store.a
 
