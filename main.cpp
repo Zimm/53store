@@ -32,9 +32,29 @@ int main(int argc, char **argv) {
 
 	cout << "decoded: " << result << endl;
 
+	delete result;
+
 	F53File file((char *)"test.53store");
 
 	file.writeData(digits, length);
+
+	delete digits;
+
+	F53File reader((char *)"test.53store");
+
+	uint6_t *adigits = reader.getData(&length);
+
+	for (int i = 0; i < length; i++) {
+
+                cout << adigits[i].b1 << adigits[i].b2 << adigits[i].b3 << adigits[i].b4 << adigits[i].b5 << adigits[i].b6 << endl;
+
+        }
+	
+	char *aresult = decoder.decodeStatement(adigits, length);
+	
+	cout << "decoded from reading: " << aresult << endl;
+
+	delete aresult;
 
 	return 0;
 }

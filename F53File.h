@@ -22,6 +22,7 @@ class F53File {
                 uint6_t *getData(int *length);
                 void writeData(uint6_t *data, int length);
 		static uint8_t *getCharFromData(uint6_t *data, int asdf);
+		static uint6_t *getDataFromChar(char*c);
 };
 
 #endif

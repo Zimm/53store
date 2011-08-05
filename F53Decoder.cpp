@@ -29,14 +29,18 @@ char F53Decoder::decodeSpecial(uint6_t c) {
 
 char *F53Decoder::decodeStatement(uint6_t *c, int length) {
 
-	char *result = (char *)calloc(length, sizeof(char));
+	uint6_t *adigits = c;
+
+	char *result = (char *)malloc(length*sizeof(char));
+
+	adigits = c;
 
 	int where = 0;
 
 	for (int i = 0; i < length; i++) {
 
 		char tmp = decodeChar(c[i]);
-
+		
 		if (tmp == (char)-128) {
 
 			result = (char *)realloc(result, length - 1*sizeof(char));

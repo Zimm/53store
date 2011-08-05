@@ -21,13 +21,103 @@ F53File::F53File(char *file) {
 
 }
 
+uint6_t *F53File::getDataFromChar(char *c) {
+
+	size_t length = strlen(c);
+
+	if (length != 3)
+		return NULL;
+
+	uint6_t *result = (uint6_t *)calloc(4, sizeof(uint6_t));
+
+	result[0] = F53Encoder::condense((c[0] & magicCondesner));
+
+	uint8_t tmp = c[0] & 0xC0;
+
+	tmp >>= 6;
+
+	uint8_t tmp1 = c[1] & 0x0F;
+
+	tmp1 <<= 2;
+
+	uint6_t asdf = F53Encoder::condense((tmp | tmp1));
+
+	result[1] = F53Encoder::condense((tmp | tmp1));
+
+	tmp = c[1] & 0xF0;
+
+	tmp >>= 4;
+
+	tmp1 = c[2] & 0x3;
+
+	tmp1 <<= 4;
+
+	result[2] = F53Encoder::condense((tmp | tmp1));
+
+	tmp = c[2] & 0xFC;
+
+	tmp >>= 2;
+
+	result[3] = F53Encoder::condense(tmp);
+
+	return result;
+
+}
+
 
 uint6_t *F53File::getData(int *length) {
-
-
 	
+	
+	if (fileStat.st_size <= 0)
+		return NULL;
 
+	FILE *pFile;
 
+	pFile = fopen(_file, "r");
+
+	unsigned char *data = new unsigned char[fileStat.st_size];
+
+	fread(data, 1, fileStat.st_size, pFile);
+
+	fclose(pFile);	
+	
+	uint8_t leftOver = (uint8_t)data[fileStat.st_size-1];
+
+	int over = (fileStat.st_size - 1) % 3;
+
+	uint6_t *result = (uint6_t *)calloc(4*((fileStat.st_size - over -1)/3), sizeof(uint6_t));
+
+	for (int i = 0; i < (fileStat.st_size - over -1)/3; i++) {
+
+		char *tmp = new char[3];
+		
+		tmp[0] = data[i*3];
+		tmp[1] = data[(i*3)+1];
+		tmp[2] = data[(i*3)+2];
+
+		uint6_t *tmp1 = getDataFromChar(tmp);
+
+		for (int a = 0; a < 4; a++) {
+
+			uint6_t asdf = tmp1[a];
+	
+		}
+
+		delete tmp;
+
+		result[i*4] = tmp1[0];
+		result[(i*4)+1] = tmp1[1];
+		result[(i*4)+2] = tmp1[2];
+		result[(i*4)+3] = tmp1[3];
+
+		delete tmp1;
+
+	}	
+
+	*length = 4*((fileStat.st_size - over -1)/3);
+
+	return result;
+	
 }
 
 uint8_t *F53File::getCharFromData(uint6_t *data, int offset) {
@@ -39,7 +129,6 @@ uint8_t *F53File::getCharFromData(uint6_t *data, int offset) {
 
 	byte[2] = (data[offset+2].b5) | (data[offset+2].b6 << 1) | (data[offset+3].b1 << 2) | (data[offset+3].b2 << 3) | (data[offset+3].b3 << 4) | (data[offset+3].b4 << 5) | (data[offset+3].b5 << 6) | (data[offset+3].b6 << 7);
 
-	cout << (byte[0]) << endl << byte[1] << endl << byte[2] << endl;
 
 	return byte;
 
@@ -49,7 +138,7 @@ void F53File::writeData(uint6_t *data, int length) {
 
 	FILE * pFile;
 
-	pFile = fopen ( _file , "wb" );
+	pFile = fopen ( _file , "w+" );
 
 	int left = length % 4;
 	
@@ -57,7 +146,6 @@ void F53File::writeData(uint6_t *data, int length) {
 
 	for (int i = 0; i < (length/4 +(left>0?1:0)); i++) {
 		uint8_t *tmp = getCharFromData(data, i*4);
-		cout << tmp[0] << endl << tmp[1] << endl << tmp[2] << endl;
 		fwrite(tmp, 1, sizeof(uint8_t)*3, pFile);
 		free(tmp);
 	}
