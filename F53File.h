@@ -4,12 +4,12 @@
 #define _F53File
 
 typedef struct bitHelper {
-        unsigned b1 : 1;
-        unsigned b2 : 1;
-        unsigned b3 : 1;
-        unsigned b4 : 1;
-        unsigned b5 : 1;
-        unsigned b6 : 1;
+	unsigned b1 : 1;
+	unsigned b2 : 1;
+	unsigned b3 : 1;
+	unsigned b4 : 1;
+	unsigned b5 : 1;
+	unsigned b6 : 1;
 	unsigned b7 : 1;
 	unsigned b8 : 1;
 };
@@ -21,7 +21,7 @@ class F53File {
                 F53File(char *file);
                 uint6_t *getData(int *length);
                 void writeData(uint6_t *data, int length);
-		static char *getCharFromData(uint6_t *data, int asdf);
+		static uint8_t *getCharFromData(uint6_t *data, int asdf);
 };
 
 #endif

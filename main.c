@@ -4,6 +4,7 @@
 #include <string.h>
 #include "F53Encoder.h"
 #include "F53Decoder.h"
+#include "F53File.h"
 
 using namespace std;
 
@@ -30,6 +31,10 @@ int main(int argc, char **argv) {
 	char *result = decoder.decodeStatement(digits, length);
 
 	cout << "decoded: " << result << endl;
+
+	F53File file((char *)"test.53store");
+
+	file.writeData(digits, length);
 
 	return 0;
 }
