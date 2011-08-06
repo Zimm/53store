@@ -7,9 +7,9 @@
 using namespace std;
 
 
-const char encoderTable[65] = {' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', (char)-128, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
+const char encoderTable[100] = {' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', (char)-128, '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '\n', '\r', '.', ',', '"', '\'', '/', '\\', '!', '?', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-','_', ';', ':', '=', '+', '[',']','{', '}','<','>','`','~', '\t','|','\0'};
 
-const unsigned int encoderTableLength = 65;
+const unsigned int encoderTableLength = 100;
 
 const int magicCondesner = 0x3F; // value of 0b00111111 so theres only 6 bits left, yayz
 

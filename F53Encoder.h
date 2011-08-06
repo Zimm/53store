@@ -13,7 +13,7 @@ typedef struct uint6_t {
 };
 
 //so it turns out a class cant start with a number?
-extern const char encoderTable[65];
+extern const char encoderTable[];
 extern const unsigned int encoderTableLength;
 extern const int magicCondesner;
 

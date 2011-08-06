@@ -23,12 +23,7 @@ F53File::F53File(char *file) {
 
 uint6_t *F53File::getDataFromChar(char *c) {
 
-	size_t length = strlen(c);
-
-	if (length != 3)
-		return NULL;
-
-	uint6_t *result = (uint6_t *)calloc(4, sizeof(uint6_t));
+	uint6_t *result = new uint6_t[4];
 
 	result[0] = F53Encoder::condense((c[0] & magicCondesner));
 
@@ -85,6 +80,7 @@ uint6_t *F53File::getData(int *length) {
 
 		alength = fileStat.st_size;
 
+
 	} else {
 
 		return NULL;
@@ -101,7 +97,7 @@ uint6_t *F53File::getData(int *length) {
 
 	int over = (int)leftOver;
 
-	uint6_t *result = (uint6_t *)calloc(4*((alength - over -1)/3 + over), sizeof(uint6_t));
+	uint6_t *result = new uint6_t[1+ over + (4*((alength-1-over)/3))];
 
 	int place, where = 0;
 
