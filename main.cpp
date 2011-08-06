@@ -44,8 +44,6 @@ int main(int argc, char **argv) {
 
 	uint6_t *adigits = reader.getData(&length);
 	
-	cout << "asdf " << length << endl;
-
 	for (int i = 0; i < length; i++) {
 
                 cout << adigits[i].b1 << adigits[i].b2 << adigits[i].b3 << adigits[i].b4 << adigits[i].b5 << adigits[i].b6 << endl;
