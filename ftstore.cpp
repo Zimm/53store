@@ -78,13 +78,48 @@ void createData(bool fromFile, int argc, char **argv) {
 	}
 
 	delete digits;
-
+	delete input;
 }
 
 void extractData(bool afile, int argc, char **argv) {
 
-	cout << "Ooops not implemented yet" << endl;
+	if (!afile) {
+		cout << "Do not support inputting a string as of yet..." << endl;
+		exit(-1);
+	}
 
+	int hasOut = -1;
+
+        for (int i = 0; i < argc; i++) {
+
+                if (strlen(argv[i]) == 2 && !strcmp(argv[i], "-o")) {
+                        hasOut = i;
+                        break;
+                }
+        }
+        //Get output
+
+	F53File reader((char *)argv[2]);
+
+	int length = 0;
+
+	uint6_t *adigits = reader.getData(&length);
+	
+	F53Decoder decoder;
+
+	char *aresult = decoder.decodeStatement(adigits, length);
+	
+	if (hasOut == -1) {
+		cout << aresult << endl;
+	} else {
+
+		FILE *pFile = fopen(argv[hasOut+1], "w+");
+
+		fwrite(aresult, 1, strlen(aresult)+1, pFile);
+
+		fclose(pFile);
+
+	}
 }
 
 void printHelp() {
