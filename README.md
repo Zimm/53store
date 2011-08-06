@@ -25,4 +25,18 @@ Upside
 It allows the flexibility to only store letters, a-z, A-Z with less actual data. Using only 6 bits per character, it's possible to get 8 characters when you could only get 6 using 8 bit, or even 7 using ascii but 8 when using 53store.
 
 
+Proof
+=====
+
+Proof is in the pudding!
+No really in this repo I have a plain txt file, something.txt and it's 336 bytes
+Then I have my fts file (fifty three store file) which was created by using the cmdline program and it's only 289 bytes!!!
+
+You may tell me 47 bytes isn't that much, which it isn't. But when you start getting into much longer files with more data it starts to make a difference. say both of these were multiplied by ten (in theory the compression would be ten times better) but then it would save you 470 bytes. While it still isn't a kilobyte, it's something. Think if you could bring this to archive files. The possibilities seem pretty large..... I'll gladly take help from anyone!
+
+Roadmap
+=======
+
+My plan is to create a database format or something with this similar to sql but without all the risk sql has. 
+I also want to add the ability to encode with a password or something of the such to make it more secure.
 
