@@ -84,7 +84,7 @@ void createData(bool fromFile, int argc, char **argv) {
 void extractData(bool afile, int argc, char **argv) {
 
 	if (!afile) {
-		cout << "Do not support inputting a string as of yet..." << endl;
+		cout << "Does not support decoding through input from cmdline"<<endl<<"Try doing echo \""<<argv[2]<<"\" > poop.bin && "<<argv[0]<<" "<<argv[1]<<" poop.bin"<<endl;
 		exit(-1);
 	}
 
@@ -122,10 +122,11 @@ void extractData(bool afile, int argc, char **argv) {
 	}
 }
 
-void printHelp() {
-
-	cout << "need to put in help, note to self" << endl;
-
+void printHelp(int argc, char **argv) {
+	cout <<endl;
+	cout << '\t' << argv[0] << " -c[f] <data> [-o output]"<< endl << "\t\t" <<" data is a file name or a plain string"<<endl<<endl;
+	cout << '\t' << argv[0] << " -x <file> [-o output]"<<endl<<endl;
+	cout << "6 bit 53store ftw"<<endl<<endl;
 }
 
 int main(int argc, char **argv) {
@@ -133,7 +134,7 @@ int main(int argc, char **argv) {
 	int args = argc - 1; //just easier to think about when coding
 
 	if (args <= 0) {
-		printHelp();
+		printHelp(argc,argv);
 		exit(-1);
 	}
 	
@@ -149,7 +150,7 @@ int main(int argc, char **argv) {
 			extractData(firstFlag.c_str()[1] == 'f', argc, argv);
 			break;
 		default:
-			printHelp();
+			printHelp(argc,argv);
 			exit(-1);
 			break;
 	}

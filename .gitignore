@@ -3,3 +3,5 @@
 test
 build
 *.53store
+*.bin
+*.out

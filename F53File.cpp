@@ -67,29 +67,45 @@ uint6_t *F53File::getDataFromChar(char *c) {
 
 uint6_t *F53File::getData(int *length) {
 	
+	int alength;
+
+	unsigned char *data;
 	
-	if (fileStat.st_size <= 0)
+	if (fileStat.st_size > 0) {
+
+		FILE *pFile;
+		
+		pFile = fopen(_file, "r");
+		
+		data = new unsigned char[fileStat.st_size];
+		
+		fread(data, 1, fileStat.st_size, pFile);
+		
+		fclose(pFile);
+
+		alength = fileStat.st_size;
+
+	} else {
+
 		return NULL;
 
-	FILE *pFile;
+		data = new unsigned char[strlen(_file)];
 
-	pFile = fopen(_file, "r");
+		strcpy((char *)data,_file);
 
-	unsigned char *data = new unsigned char[fileStat.st_size];
+		alength = strlen(_file);
 
-	fread(data, 1, fileStat.st_size, pFile);
-
-	fclose(pFile);	
+	}	
 	
-	uint8_t leftOver = (uint8_t)data[fileStat.st_size-1];
+	uint8_t leftOver = (uint8_t)data[alength-1];
 
 	int over = (int)leftOver;
 
-	uint6_t *result = (uint6_t *)calloc(4*((fileStat.st_size - over -1)/3 + over), sizeof(uint6_t));
+	uint6_t *result = (uint6_t *)calloc(4*((alength - over -1)/3 + over), sizeof(uint6_t));
 
 	int place, where = 0;
 
-	for (int i = 0; i < ((fileStat.st_size - over -1)/3); i++) {
+	for (int i = 0; i < ((alength - over -1)/3); i++) {
 
 		char *tmp = new char[3];
 		
@@ -139,7 +155,7 @@ uint6_t *F53File::getData(int *length) {
 		result[++where] = thing;
 	}
 
-	*length = 4*((fileStat.st_size - over -1)/3) + over;
+	*length = 4*((alength -1)/3) + over;
 
 	return result;
 	

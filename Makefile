@@ -1,5 +1,7 @@
 all:lib53Store
 
+total:lib53Store cmdline test
+
 test:
 	@echo 'Building test program....'
 	@g++ main.cpp -o build/test build/lib53Store.a
