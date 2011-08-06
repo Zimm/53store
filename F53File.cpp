@@ -85,9 +85,11 @@ uint6_t *F53File::getData(int *length) {
 
 	int over = (int)leftOver;
 
-	uint6_t *result = (uint6_t *)calloc(4*((fileStat.st_size - over -1)/3), sizeof(uint6_t));
+	uint6_t *result = (uint6_t *)calloc(4*((fileStat.st_size - over -1)/3 + over), sizeof(uint6_t));
 
-	for (int i = 0; i < (fileStat.st_size - over -1)/3; i++) {
+	int place, where = 0;
+
+	for (int i = 0; i < ((fileStat.st_size - over -1)/3); i++) {
 
 		char *tmp = new char[3];
 		
@@ -95,13 +97,9 @@ uint6_t *F53File::getData(int *length) {
 		tmp[1] = data[(i*3)+1];
 		tmp[2] = data[(i*3)+2];
 
+		place = (i*3)+2;
+
 		uint6_t *tmp1 = getDataFromChar(tmp);
-
-		for (int a = 0; a < 4; a++) {
-
-			uint6_t asdf = tmp1[a];
-	
-		}
 
 		delete tmp;
 
@@ -110,11 +108,38 @@ uint6_t *F53File::getData(int *length) {
 		result[(i*4)+2] = tmp1[2];
 		result[(i*4)+3] = tmp1[3];
 
+		where = (i*4)+3;
+
 		delete tmp1;
 
-	}	
+	}
 
-	*length = 4*((fileStat.st_size - over -1)/3);
+	char *tmp = new char[3];
+
+	for (int a = 0; a < 3; a++) {
+		tmp[a] = data[++place];
+	}
+
+	for (int a = 0; a < over; a++) {
+		uint6_t thing = F53Encoder::condense(0);
+		switch (a) {
+			case 0:
+				thing = F53Encoder::condense((tmp[0] & magicCondesner));
+				break;
+			case 1:
+				thing = F53Encoder::condense((((((uint8_t)tmp[0]) >> 6) & 0x3) | ((((uint8_t)tmp[1]) << 2) & 0x3C)));
+				break;
+			case 2:
+				thing = F53Encoder::condense((((((uint8_t)tmp[1]) >> 4) & 0xF) | ((((uint8_t)tmp[1]) << 4) & 0x30)));
+				break;
+			default:
+				cout << "Ooops..." << endl;
+				break;
+		}
+		result[++where] = thing;
+	}
+
+	*length = 4*((fileStat.st_size - over -1)/3) + over;
 
 	return result;
 	
