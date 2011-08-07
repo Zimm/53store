@@ -97,7 +97,7 @@ uint6_t *F53File::getData(int *length) {
 
 	int over = (int)leftOver;
 
-	uint6_t *result = new uint6_t[1+ over + (4*((alength-1-over)/3))];
+	uint6_t *result = new uint6_t[over + (4*((alength-1-over)/3))];
 
 	int place, where = 0;
 
